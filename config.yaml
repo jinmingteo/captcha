@@ -1,0 +1,8 @@
+# default config
+use_doc_orientation_classify: false
+use_doc_unwarping: false
+use_textline_orientation: false
+
+# specify model for better accuracy
+text_recognition_model_name: "en_PP-OCRv5_mobile_rec"
+# text_recognition_model_name: "en_PP-OCRv4_mobile_rec"

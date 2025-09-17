@@ -1,16 +1,13 @@
 import os
 import glob
+import yaml
 
 
 class Captcha(object):
-    def __init__(self):
+    def __init__(self, config):
         from paddleocr import PaddleOCR
 
-        self.ocr = PaddleOCR(
-            use_doc_orientation_classify=False,
-            use_doc_unwarping=False,
-            use_textline_orientation=False,
-        )
+        self.ocr = PaddleOCR(**config)
 
     def __call__(self, im_path, save_path):
         """
@@ -44,12 +41,19 @@ if __name__ == "__main__":
     parser.add_argument(
         "--save_path", type=str, default="./results", help="path to save the output"
     )
+    parser.add_argument(
+        "--config", type=str, default="config.yaml", help="path to config file"
+    )
     args = parser.parse_args()
 
     os.makedirs(args.save_path, exist_ok=True)
     captcha_files = glob.glob(os.path.join(args.im_directory, "*.jpg"))
 
-    model = Captcha()
+    with open("config.yaml", "r") as f:
+        config = yaml.safe_load(f)
+
+    print("Model config : ", config)
+    model = Captcha(config=config)
     for im_path in captcha_files:
-        print(im_path)
+        print("inferring on ", im_path)
         model(im_path, args.save_path)
