@@ -23,7 +23,10 @@ class Captcha(object):
         for res in result:
             res.save_to_json(
                 os.path.join(
-                    save_path, os.path.basename(im_path).replace(".jpg", ".json")
+                    save_path,
+                    os.path.basename(im_path)
+                    .replace(".jpg", ".json")
+                    .replace("input", "output"),
                 )
             )
 
