@@ -1,0 +1,3 @@
+[submodule "train/PaddleOCR"]
+	path = train/PaddleOCR
+	url = https://github.com/PaddlePaddle/PaddleOCR.git
