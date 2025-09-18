@@ -4,5 +4,6 @@ use_doc_unwarping: false
 use_textline_orientation: false
 
 # specify model for better accuracy
+rec_model_dir: "train/PaddleOCR/output/best_accuracy/"
 text_recognition_model_name: "en_PP-OCRv5_mobile_rec"
 # text_recognition_model_name: "en_PP-OCRv4_mobile_rec"
