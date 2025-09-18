@@ -31,6 +31,10 @@ if __name__ == "__main__":
             all_gt.extend(gt)
 
         print(f"Character Error Rate (CER): {cer(all_gt, all_pred)}")
+        overall_acc = sum([1 if p == g else 0 for p, g in zip(all_pred, all_gt)]) / len(
+            all_gt
+        )
+        print(f"Accuracy: {overall_acc*100:.0f}%")
     except FileNotFoundError as e:
         print("Make sure you have run main.py to generate the results first!")
         raise e
