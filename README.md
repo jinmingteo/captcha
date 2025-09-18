@@ -121,3 +121,11 @@ python3 tools/export_model.py \
   -o Global.pretrained_model=./output/en_rec_ppocr_v5/best_accuracy.pdparams \
      Global.save_inference_dir=./output/best_accuracy
 ```
+
+## Commands
+```bash
+# Run inference based on config.yaml
+python3 main.py
+# Run evaluation 
+python3 evaluate.py
+```
