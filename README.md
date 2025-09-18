@@ -1,4 +1,5 @@
 # CAPTCHA Recognition with PaddleOCR
+![Overview](src/Overview.png)
 
 ## Model Selection
 We chose **PaddleOCR** because of prior experience with the library and its active maintenance.

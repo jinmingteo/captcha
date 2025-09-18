@@ -74,6 +74,7 @@ def generate_character_library():
     print("Generated characters_library")
     return df
 
+
 def generate_synthetic_captchas(df):
     generate_num = 350
     negative_mining_chars = ["0", "O", "Q", "7", "2", "Z"]
@@ -106,21 +107,18 @@ def generate_synthetic_captchas(df):
     print(len(train_df), len(test_df), "train and test split done")
     return syn_df
 
+
 if __name__ == "__main__":
     if not os.path.exists("characters_library/gt.csv"):
         df = generate_character_library()
     else:
-        print ("characters_library already exists, skipping generation")
+        print("characters_library already exists, skipping generation")
         df = pd.read_csv("characters_library/gt.csv")
 
     if not os.path.exists("synthetic/gt.csv"):
         syn_df = generate_synthetic_captchas(df)
     else:
-        print ("synthetic captchas already exists, skipping generation")
+        print("synthetic captchas already exists, skipping generation")
         syn_df = pd.read_csv("synthetic/gt.csv")
 
-    print (syn_df.head())
-    
-    
-
-
+    print(syn_df.head())
