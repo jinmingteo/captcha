@@ -8,6 +8,10 @@ from sklearn.model_selection import train_test_split
 
 
 def get_most_frequent_bbox():
+    """
+    Get the most frequent bounding box coordinates from the prediction results.
+    This assumes that the bounding boxes are relatively consistent across images.
+    """
     pred_files = glob.glob("results/*.json")
     all_x, all_y, all_w, all_h = [], [], [], []
     for pred_file in pred_files:
@@ -36,6 +40,10 @@ def get_most_frequent_bbox():
 
 
 def generate_character_library():
+    """
+    Crop individual characters from the captcha images based on the most frequent bounding box.
+    Save the cropped characters and their ground truth labels.
+    """
     img_paths, img_gt = [], []
 
     x, y, w, h = get_most_frequent_bbox()
@@ -75,12 +83,20 @@ def generate_character_library():
     return df
 
 
-def generate_synthetic_captchas(df):
+def generate_synthetic_captchas(df, hard_chars_ratio=0.3):
+    """
+    Generate synthetic captchas by stitching together individual character images.
+    args:
+        df: DataFrame containing 'img_path' and 'gt' columns for individual characters
+        hard_chars_ratio: Proportion of synthetic captchas to include hard characters
+    """
     generate_num = 350
     negative_mining_chars = ["0", "O", "Q", "7", "2", "Z"]
     syn_img_paths, syn_gt = [], []
     for i in range(generate_num):
-        hard_mining = np.random.choice([0, 1], p=[0.7, 0.3])
+        hard_mining = np.random.choice(
+            [0, 1], p=[1 - hard_chars_ratio, hard_chars_ratio]
+        )
         if hard_mining:
             hard_characters = df[df["gt"].isin(negative_mining_chars)]
             hard_sampled = hard_characters.sample(3, replace=True)

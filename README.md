@@ -2,7 +2,34 @@
 ![Overview](src/Overview.png)
 
 ## Model Selection
-We chose **PaddleOCR** because of prior experience with the library and its active maintenance.
+We selected **PaddleOCR** because of prior experience with the library and its active maintenance.  
+
+### Script Reference
+Refer to [main.py](main.py) and update the recognition model in [config.yaml](config.yaml) as needed.
+
+#### Commands
+```bash
+# Run inference based on config.yaml
+python3 main.py
+# Run evaluation based on results predicted from main.py
+python3 evaluate.py
+```
+
+### Evaluation Metrics
+Our primary evaluation metric is **Accuracy**, defined as 1 when the predicted string exactly matches the ground truth, and 0 otherwise.
+
+We also compute **Character Error Rate (CER)** as a secondary metric, since we are interested in character-level recognition accuracy.  
+CER is typically calculated using the Levenshtein distance, which measures the minimum number of single-character edits (insertions, deletions, or substitutions) required to transform one string into another:
+
+CER = (S + D + I) / N
+where:
+- **S** = number of substitutions  
+- **D** = number of deletions  
+- **I** = number of insertions  
+- **N** = number of characters in the ground truth
+
+### Baseline models evaluation
+
 Initial testing showed that the text detector performs well, successfully cropping regions of interest.
 
 However, for text recognition, the following issues surfaced:
@@ -59,6 +86,10 @@ We proceed with fine-tuning `en_PP-OCRv5_mobile_rec` due to computational constr
 ---
 
 ## Synthetic Captcha Generation
+
+### Script Reference
+Refer to [synthetic.py](synthetic.py)
+
 **Observations:**
 
 The captcha generator places bounding boxes in nearly fixed positions.
@@ -112,7 +143,7 @@ Character Error Rate (CER): 0%
 Accuracy: 100%
 ```
 
-## Training & Export Commands
+### Training & Export Commands
 
 ```bash
 python3 tools/train.py -c train/en_PP-OCRv5_mobile_rec.yaml
@@ -120,12 +151,4 @@ python3 tools/export_model.py \
   -c train/en_PP-OCRv5_mobile_rec.yaml \
   -o Global.pretrained_model=./output/en_rec_ppocr_v5/best_accuracy.pdparams \
      Global.save_inference_dir=./output/best_accuracy
-```
-
-## Commands
-```bash
-# Run inference based on config.yaml
-python3 main.py
-# Run evaluation 
-python3 evaluate.py
 ```
